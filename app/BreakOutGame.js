@@ -24,16 +24,24 @@ var breakOutGame = (function () {
 	var paddle;
 	var ball;
 
+    //Zeichne Ball
 	function privateDraw() {
         console.log("Drawing!");
+        privateContext.beginPath();
+        privateContext.arc(240, 160, BALLSIZE, 0, Math.PI*2, false);
+        privateContext.fillStyle = "#0095DD";
+        privateContext.fill();
+        privateContext.closePath();
         window.requestAnimationFrame(privateDraw);
 	}
-
+    
+    //Canvas 2D Umgebung
 	function privateSetContext(canvas) {
 		privateCanvas = canvas;
 		privateContext = canvas.getContext("2d");
 	}
-
+    
+    //Schwierigkeitsgrad
 	function publicInit(canvas, difficulty) {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);
