@@ -6,61 +6,57 @@
  * ball.
  *
  */
-var breakOutGame = (function () {
+var breakOutGame = (function (Brick, Ball, Paddle) {
 
 	// private vars and constants
     var privateContext; // 2d
 	var privateCanvas; // canvas
     
-    //Resolution
+    // Resolution
 	var GAME_WIDTH = 600;
 	var GAME_HEIGHT = 500;
     
-    // Zeilen und Spalten
+    // ROWS & COLUMNS
 	var BRICK_ROWS = 5;
 	var BRICK_COLUMNS = 13;
     
     // Radius
 	var BALLSIZE = 10;
     
-    // Breite und Höhe
+    // WIDTH & HEIGHT
 	var BRICK_WIDTH = 40;
 	var BRICK_HEIGHT = 10;
     
-    // Array und Schleifen
+    // Array & Loop
 	var bricks = [];
     var i;
     var j;
     
-    // Abstand und Rand
+    // Offset & Padding
     var brickPadding = 10;
     var brickOffsetTop = 10;
-    var brickOffsetLeft = 0;
+    var brickOffsetLeft = 5;
     
-    for(i=0; i<BRICK_COLUMNS; i++) {
-        bricks[i] = [];
-        for(j=0; j<BRICK_ROWS; j++) {
-            bricks[i][j] = {x: 0, y: 0};
-            }
-        }
-    
-    // Schläger
+    // Objects    
 	var paddle;
-    
-    // Ball
 	var ball;
 
-    //Zeichne
-	function privateDraw() {
-        console.log("Drawing!");
+    
+    function drawBrick() {
+            for(i=0; i<BRICK_COLUMNS; i++) {
+                bricks[i] = [];
+                    for(j=0; j<BRICK_ROWS; j++) {
+                        bricks[i][j] = {x: 0, y: 0};
+            }
+        }
         
-    //drawBrick
-    for(i=0; i<BRICK_COLUMNS; i++){
-        for(j=0; j<BRICK_ROWS; j++) {
-            var brickX = (i*(BRICK_WIDTH+brickPadding))+brickOffsetLeft;
-            var brickY = (j*(BRICK_HEIGHT+brickPadding))+brickOffsetTop;
-            bricks[i][j].x = 0;
-            bricks[i][j].y = 0;
+            for(i=0; i<BRICK_COLUMNS; i++){
+                for(j=0; j<BRICK_ROWS; j++) {
+                    var brickX = (i*(BRICK_WIDTH+brickPadding))+brickOffsetLeft;
+                        var brickY = (j*(BRICK_HEIGHT+brickPadding))+brickOffsetTop;
+                        bricks[i][j].x = 0;
+                        bricks[i][j].y = 0;
+                    
             privateContext.beginPath();
             privateContext.rect(brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT);
             privateContext.fillStyle = "red";
@@ -68,16 +64,72 @@ var breakOutGame = (function () {
             privateContext.closePath();
             }
         }
-        window.requestAnimationFrame(privateDraw);
+    }
+    
+    function Brickupdate() {
+
+    }
+
+    function drawPaddle() {
+        var paddleHeight = 10;
+        var paddleWidth = 75;
+        var paddleX = (canvas.width-paddleWidth)/2;
+        
+        
+        
+        
+        
+        privateContext.beginPath();
+        privateContext.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        privateContext.fillStyle = "#0095DD";
+        privateContext.fill();
+        privateContext.closePath();
+    }
+    setInterval(drawPaddle, 10)
+    function Paddleupdate() {
+        
+    }
+    
+    function drawBall() {
+        var x = canvas.width/2;
+        var y = canvas.height/2;
+        
+        privateContext.beginPath();
+        privateContext.arc(x, y, BALLSIZE, 0, Math.PI*2);
+        privateContext.fillStyle = "green";
+        privateContext.fill();
+        privateContext.closePath();
+    }
+    
+    function Ballupdate() {
+        
+    }
+    
+    //Paint
+	function privateDraw() {
+        console.log("Drawing!");
+        
+        //draw Brick & update
+        drawBrick();
+        Brickupdate();
+        
+        //draw Paddle & update
+        drawPaddle();
+        Paddleupdate();
+        
+        //draw Ball & update
+        drawBall();
+        Ballupdate();
+        
 	}
     
-    //Canvas 2D Umgebung
+    //Canvas 2D 
 	function privateSetContext(canvas) {
 		privateCanvas = canvas;
 		privateContext = canvas.getContext("2d");
 	}
     
-    //Schwierigkeitsgrad
+    //Difficulty
 	function publicInit(canvas, difficulty) {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);

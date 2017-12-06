@@ -1,16 +1,21 @@
 /* A Brick in the game */
 
-//Konstruktor Brick
+//Constructor
 var Brick = function(context, xPos, yPos, color, width, height) {
-
+    this.context = context;
+    this.BrickX = xPos;
+    this.BrickY = yPos;
+    this.Brickcolor = color;
+    this.Brickwidth = width;
+    this.Brickheight = height;
 }
 
-//Rechteck
-Brick.prototype.draw = function(privateContext, BRICK_WIDTH, BRICK_HEIGHT) {
-    privateContext.beginPath();
-    privateContext.rect(10, 10, BRICK_WIDTH, BRICK_HEIGHT);
-    privateContext.fillStyle = "red";
-    privateContext.fill();
-    privateContext.closePath();
+//Rectangle draw
+Brick.prototype.draw = function() {
+    this.context.beginPath();
+    this.context.rect(this.BrickX, this.BrickY, this.Brickwidth, this.Brickheight);
+    this.context.fillStyle = "red";
+    this.context.fill();
+    this.context.closePath();
 }
 
