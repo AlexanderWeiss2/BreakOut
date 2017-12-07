@@ -12,10 +12,7 @@ var Brick = function(context, xPos, yPos, color, width, height) {
 
 //Rectangle draw
 Brick.prototype.draw = function() {
-    this.context.beginPath();
-    this.context.rect(this.BrickXPos, this.BrickYPos, this.BrickWidth, this.BrickHeight);
     this.context.fillStyle = this.BrickColor;
-    this.context.fill();
-    this.context.closePath();
+    this.context.fillRect(this.BrickXPos, this.BrickYPos, this.BrickWidth, this.BrickHeight);
 }
 

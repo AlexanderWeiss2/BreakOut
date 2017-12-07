@@ -6,7 +6,7 @@
  * ball.
  *
  */
-var breakOutGame = (function (Brick) {
+var breakOutGame = (function (Brick, Ball, Paddle) {
 
 	// private vars and constants
     var privateContext;
@@ -22,16 +22,21 @@ var breakOutGame = (function (Brick) {
     var BRICK_XPOS = 10;
     var BRICK_YPOS = 10;
     var BRICK_COLOR = "red";
+    var BRICK_PADDING = 10;
+    var BRICK_OFFSETTOP = 10;
+    var BRICK_OFFSETLEFT = 10;
+    var BallSpeedX = 2;
+    var BallSpeedY = -2;
     
-	var bricks = [];
-	var paddle;
-	var ball;
+	var brick = new Brick(privateContext, BRICK_XPOS, BRICK_YPOS, BRICK_COLOR, BRICK_WIDTH, BRICK_HEIGHT);
+	var paddle = new Paddle(privateContext, GAME_WIDTH, GAME_HEIGHT);
+	var ball = new Ball(privateContext, BRICK_XPOS, BRICK_YPOS, BALLSIZE);
 
 	function privateDraw() {
         console.log("Drawing!");
-        Brick.draw();
-        Ball.draw();
-        Paddle.draw();
+        brick.draw();
+        ball.draw();
+        paddle.draw();
         window.requestAnimationFrame(privateDraw);
 	}
 
@@ -42,10 +47,14 @@ var breakOutGame = (function (Brick) {
 
     function privateInitContent(){
         var bricks = [];
-            for (var r = 0; r < BRICK_ROWS; r++){
-                for (var c = 0; c < BRICK_COLUMNS; c++){
-                    var brick[r][c] = new Brick(privateContext, BRICK_XPOS, BRICK_YPOS, BRICK_COLOR, BRICK_WIDTH, BRICK_HEIGHT);
-                    bricks[r][c].push(brick);
+            for (var i = 0; i < BRICK_COLUMNS; i++){
+                bricks[i] = [];
+                for (var j = 0; j < BRICK_ROWS; j++){
+                    bricks[i][j] = { x:0, y:0 };
+                    
+                    var brick = new Brick(privateContext, BRICK_XPOS, BRICK_YPOS, BRICK_COLOR, BRICK_WIDTH, BRICK_HEIGHT);
+                    
+                    bricks[i][j].push(brick);
                     }
                 }
             }
@@ -56,9 +65,7 @@ var breakOutGame = (function (Brick) {
 		window.requestAnimationFrame(privateDraw);
 	}
 
-	return {
-		init: publicInit
-	};
+	return {init: publicInit};
 })();
 
 var canvas = document.getElementById("breakoutcanvas");
