@@ -6,7 +6,7 @@
  * ball.
  *
  */
-var breakOutGame = (function (Brick, Ball, Paddle) {
+var breakOutGame = (function () {
 
 	// private vars and constants
     var privateContext;
@@ -14,6 +14,7 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
     
 	var GAME_WIDTH = 600;
 	var GAME_HEIGHT = 500;
+    
 	var BRICK_ROWS = 5;
 	var BRICK_COLUMNS = 13;
 	var BALLSIZE = 10;
@@ -29,7 +30,13 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
     var BallSpeedY = -2;
     var BallX = GAME_WIDTH/2;
     var BallY = GAME_HEIGHT/2;
-    
+    var PaddleWidth = 75;
+    var PaddleHeight = 10;
+    var PaddleX = (GAME_WIDTH-PaddleWidth)/2;
+    var PaddleY = GAME_HEIGHT-PaddleHeight;
+    var RightPressed = false;
+    var LeftPressed = false;
+    /*
 	var brick = function Brick(privateContext, BRICK_XPOS, BRICK_YPOS, BRICK_COLOR, BRICK_WIDTH, BRICK_HEIGHT) {
         
     }
@@ -39,6 +46,8 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
 	var ball = function Ball(privateContext, BRICK_XPOS, BRICK_YPOS, BALLSIZE) {
         
     }
+    */
+    
     /*
     function drawbrick() {
         privateContext.beginPath();
@@ -47,15 +56,24 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
         privateContext.fill();
         privateContext.closePath();
     }
-    
+    */
     function drawpaddle() {
+        privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         privateContext.beginPath();
-        privateContext.rect();
+        privateContext.rect(PaddleX, PaddleY, PaddleWidth, PaddleHeight);
         privateContext.fillStyle = "#0095DD";
         privateContext.fill();
-        privateContext.closePath();        
+        privateContext.closePath();
+        
+        if(RightPressed && PaddleX < GAME_WIDTH-PaddleWidth) {
+            PaddleX += 7; 
+        }
+        
+        else if(LeftPressed && PaddleX > 0) {
+            PaddleX -= 7;
+        }
     }
-    */
+    
     function drawball() {
         privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         privateContext.beginPath();
@@ -79,8 +97,8 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
 	function privateDraw() {
         console.log("Drawing!");
        // drawbrick();
-        //drawpaddle();
-        drawball();
+        drawpaddle();
+        //drawball();
         window.requestAnimationFrame(privateDraw);
 	}
 
@@ -109,6 +127,32 @@ var breakOutGame = (function (Brick, Ball, Paddle) {
 		window.requestAnimationFrame(privateDraw);
 	}
 
+    document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+    
+    function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+            RightPressed = true;
+        }
+        
+        else if(e.keyCode == 37) {
+            LeftPressed = true;
+        }
+    }
+        
+    function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+           RightPressed = false;
+        }
+        
+        else if(e.keyCode == 37) {
+            LeftPressed = false;
+        }
+    }    
+        
+        
+
+    
 	return {init: publicInit};
 })();
 
