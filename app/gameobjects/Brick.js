@@ -3,16 +3,16 @@
 //Constructor
 var Brick = function(context, xPos, yPos, color, width, height) {
     this.context = context;
-    this.BrickXPos = xPos;
-    this.BrickYPos = yPos;
-    this.BrickColor = color;
-    this.BrickWidth = width;
-    this.BrickHeight = height;
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.color = color;
+    this.width = width;
+    this.height = height;
 }
 
 //Rectangle draw
 Brick.prototype.draw = function() {
-    this.context.fillStyle = this.BrickColor;
-    this.context.fillRect(this.BrickXPos, this.BrickYPos, this.BrickWidth, this.BrickHeight);
+    this.context.fillStyle = this.color;
+    this.context.fillRect(this.xPos, this.yPos, this.width, this.height);
 }
 
