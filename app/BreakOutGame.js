@@ -19,6 +19,9 @@ var breakOutGame = (function () {
     // Score
     var score = 0;
     
+    // Lives
+    var lives = 3;
+    
     // var Bricks
 	var BRICK_ROWS = 5;
 	var BRICK_COLUMNS = 13;
@@ -140,8 +143,14 @@ var breakOutGame = (function () {
     
     function drawScore() {
         privateContext.font = "16px Arial";
-        privateContext.fillStyle = "#00FF00";
+        privateContext.fillStyle = "#FFFF00";
         privateContext.fillText("Score:" +score,  8, 20);
+    }
+    
+    function drawLives() {
+        privateContext.font = "16px Arial";
+        privateContext.fillStyle = "#FF00FF"
+        privateContext.fillText("Lives:"+lives, canvas.width-65, 20);
     }
     
 	function privateDraw() {
@@ -151,6 +160,7 @@ var breakOutGame = (function () {
         drawBall();
         drawPaddle();
         drawScore();
+        drawLives();
         CollisionDetection();
         
         if(BallX + BallSpeedX > GAME_WIDTH-BALLSIZE || BallX + BallSpeedX < BALLSIZE) {
@@ -169,9 +179,20 @@ var breakOutGame = (function () {
                     }
                 }
                 
-                else {
+                else { 
+                    lives--;
+                    if(!lives) {
                     alert("GAME OVER");
                     document.location.reload();
+                    }
+                    
+                    else {
+                        BallX = canvas.width/2;
+                        BallY = canvas.height-30;
+                        BallSpeedX = 3;
+                        BallSpeedY = -3;
+                    
+                    }    
                 }
             }
         
