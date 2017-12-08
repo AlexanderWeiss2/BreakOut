@@ -48,6 +48,7 @@ var breakOutGame = (function () {
     
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
    
     var bricks = [];
         for (i = 0; i < BRICK_COLUMNS; i++){
@@ -75,7 +76,14 @@ var breakOutGame = (function () {
         else if(e.keyCode == 37) {
             LeftPressed = false;
         }
-    }    
+    }
+    
+    function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if(relativeX > 0 && relativeX < canvas.width) {
+            PaddleX = relativeX - PaddleWidth/2;
+        }
+    }
 
     function drawBall() {
         privateContext.beginPath();
