@@ -88,17 +88,28 @@ var breakOutGame = (function () {
             BallSpeedX = -BallSpeedX;
         }
         
-        if (BallY + BallSpeedY > GAME_HEIGHT-BALLSIZE || BallY + BallSpeedY < BALLSIZE) {
+        if(BallY + BallSpeedY < BALLSIZE) {
             BallSpeedY = -BallSpeedY;
         }
+            if(BallY + BallSpeedY > GAME_HEIGHT-BALLSIZE) {
+                
+                if(BallX > PaddleX && BallX < PaddleX + PaddleWidth) {
+                    BallSpeedY = -BallSpeedY;
+                }
+                
+                else {
+                    alert("GAME OVER");
+                    document.location.reload();
+                }
+            }
         
     }
     
 	function privateDraw() {
         console.log("Drawing!");
        // drawbrick();
-        drawpaddle();
-        //drawball();
+        //drawpaddle();
+        drawball();
         window.requestAnimationFrame(privateDraw);
 	}
 
