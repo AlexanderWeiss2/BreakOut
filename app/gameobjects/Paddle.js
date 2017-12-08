@@ -1,4 +1,6 @@
 /* Paddle represents the players paddle used to deflect the ball in the game */
+
+// Paddle Constructor
 var Paddle = function(context, Width, Height) {
     this.context = context;
     this.WIDTH = Width;

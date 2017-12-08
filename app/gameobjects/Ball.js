@@ -1,4 +1,6 @@
 /* The ball in the game */
+
+// Ball Constructor
 var Ball = function(context, xPos, yPos, BALLSIZE, speedx, speedy) {
         this.context = context;
         this.BALLXPos = xPos;
